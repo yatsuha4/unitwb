@@ -10,9 +10,10 @@ public class AudioManager
 {
   public static AudioManager instance { private set; get; } = null;
 
-  public GameObject soundPrefab;
+  public GameObject audioPrefab;
 
   private List<AudioClip> playSounds = new List<AudioClip>();
+  private AudioObject music = null;
 
   /**
    */
@@ -38,16 +39,47 @@ public class AudioManager
      @param[in] volume ボリューム
      @return オブジェクト
   */
-  public GameObject PlaySound(AudioClip clip, float volume = 1.0f) {
+  public AudioObject PlaySound(AudioClip clip, float volume = 1.0f) {
     if(!this.playSounds.Contains(clip)) {
-      if(Instantiate(this.soundPrefab, this.transform) is GameObject obj) {
-        var soundObj = obj.GetComponent<SoundObject>();
-        soundObj.Play(clip, volume);
+      if(Play(this.audioPrefab) is AudioObject audioObj) {
+        audioObj.Play(clip, volume);
         this.playSounds.Add(clip);
-        return obj;
+        return audioObj;
       }
     }
     return null;
+  }
+
+  /**
+     曲を再生する
+     @param[in] clip クリップ
+     @param[in] fadeTime フェード時間
+     @param[in] volume ボリューム
+     @param[in] loop ループ
+  */
+  public void PlayMusic(AudioClip clip, 
+                        float fadeTime = 0.5f, 
+                        float volume = 1.0f, 
+                        bool loop = true) {
+    if(this.music != null) {
+      this.music.SetVolume(0.0f, fadeTime);
+      this.music = null;
+    }
+    if(Play(this.audioPrefab) is AudioObject audioObj) {
+      if(fadeTime > 0.0f) {
+        audioObj.Play(clip, 0.0f, loop).SetVolume(volume, fadeTime);
+      }
+      else {
+        audioObj.Play(clip, volume, loop);
+      }
+      this.music = audioObj;
+    }
+  }
+
+  /**
+   */
+  public AudioObject Play(GameObject prefab) {
+    return Instantiate(prefab, this.transform)?.GetComponent<AudioObject>();
   }
 }
 }
