@@ -10,8 +10,8 @@ public class Crypt {
   /**
      コンストラクタ
   */
-  public Crypt(string password) {
-    this.algorithm = CreateRijndaelManaged(password);
+  public Crypt(string password, string salt) {
+    this.algorithm = CreateRijndaelManaged(password, salt);
   }
 
   /**
@@ -38,9 +38,10 @@ public class Crypt {
 
   /**
    */
-  private static RijndaelManaged CreateRijndaelManaged(string password) {
+  private static RijndaelManaged CreateRijndaelManaged(string password, string salt) {
     var rijndael = new RijndaelManaged();
-    var deriveBytes = new Rfc2898DeriveBytes(password, 8, 1000);
+    var deriveBytes = 
+      new Rfc2898DeriveBytes(password, System.Text.Encoding.ASCII.GetBytes(salt));
     rijndael.Key = deriveBytes.GetBytes(rijndael.KeySize / 8);
     rijndael.IV = deriveBytes.GetBytes(rijndael.BlockSize / 8);
     return rijndael;
