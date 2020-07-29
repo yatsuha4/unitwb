@@ -61,10 +61,7 @@ public class AudioManager
                         float fadeTime = 0.5f, 
                         float volume = 1.0f, 
                         bool loop = true) {
-    if(this.music != null) {
-      this.music.SetVolume(0.0f, fadeTime);
-      this.music = null;
-    }
+    StopMusic(fadeTime);
     if(Play(this.audioPrefab) is AudioObject audioObj) {
       if(fadeTime > 0.0f) {
         audioObj.Play(clip, 0.0f, loop).SetVolume(volume, fadeTime);
@@ -73,6 +70,17 @@ public class AudioManager
         audioObj.Play(clip, volume, loop);
       }
       this.music = audioObj;
+    }
+  }
+
+  /**
+     曲を停止する
+     @param[in] time フェードアウト時間
+  */
+  public void StopMusic(float time = 0.5f) {
+    if(this.music != null) {
+      this.music.SetVolume(0.0f, time);
+      this.music = null;
     }
   }
 
