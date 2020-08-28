@@ -7,19 +7,27 @@ namespace unitwb {
 public class Transition
   : MonoBehaviour
 {
-  private string scene;
+  private System.Action callback;
 
   /**
    */
   public void Transit(string scene) {
-    this.scene = scene;
+    Transit(() => {
+      SceneManager.LoadScene(scene);
+    });
+  }
+
+  /**
+   */
+  public void Transit(System.Action callback) {
+    this.callback = callback;
     GetComponent<Animator>().SetTrigger("Out");
   }
 
   /**
    */
   public void OnOut() {
-    SceneManager.LoadScene(this.scene);
+    this.callback?.Invoke();
   }
 
   /**
