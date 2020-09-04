@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine.Audio;
 using UnityEngine;
 
 namespace unitwb.audio {
@@ -8,8 +9,15 @@ namespace unitwb.audio {
 public class AudioManager
   : MonoBehaviour
 {
+  public enum Mixer {
+    Sound, 
+    Music
+  }
+
   public static AudioManager instance { private set; get; } = null;
 
+  public AudioMixer mixer;
+  public AudioMixerGroup[] mixers;
   public GameObject audioPrefab;
 
   private List<AudioClip> playSounds = new List<AudioClip>();
@@ -42,7 +50,7 @@ public class AudioManager
   public AudioObject PlaySound(AudioClip clip, float volume = 1.0f) {
     if(!this.playSounds.Contains(clip)) {
       if(Play(this.audioPrefab) is AudioObject audioObj) {
-        audioObj.Play(clip, volume);
+        audioObj.Play(GetMixer(Mixer.Sound), clip, volume);
         this.playSounds.Add(clip);
         return audioObj;
       }
@@ -58,16 +66,17 @@ public class AudioManager
      @param[in] loop ループ
   */
   public void PlayMusic(AudioClip clip, 
-                        float fadeTime = 0.5f, 
+                        float fadeTime = 0.0f, 
                         float volume = 1.0f, 
                         bool loop = true) {
     StopMusic(fadeTime);
     if(Play(this.audioPrefab) is AudioObject audioObj) {
       if(fadeTime > 0.0f) {
-        audioObj.Play(clip, 0.0f, loop).SetVolume(volume, fadeTime);
+        audioObj.Play(GetMixer(Mixer.Music), clip, 0.0f, loop).
+          SetVolume(volume, fadeTime);
       }
       else {
-        audioObj.Play(clip, volume, loop);
+        audioObj.Play(GetMixer(Mixer.Music), clip, volume, loop);
       }
       this.music = audioObj;
     }
@@ -88,6 +97,21 @@ public class AudioManager
    */
   public AudioObject Play(GameObject prefab) {
     return Instantiate(prefab, this.transform)?.GetComponent<AudioObject>();
+  }
+
+  /**
+   */
+  public void SetMasterVolume(Mixer mixer, float volume) {
+    this.mixer.SetFloat(mixer.ToString(), 
+                        (volume > 0.0f)
+                        ? Mathf.Clamp(Mathf.Log10(volume) * 20.0f, -80.0f, 0.0f)
+                        : -80.0f);
+  }
+
+  /**
+   */
+  private AudioMixerGroup GetMixer(Mixer mixer) {
+    return this.mixers[(int)mixer];
   }
 }
 }

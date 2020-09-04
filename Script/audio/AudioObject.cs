@@ -1,3 +1,4 @@
+using UnityEngine.Audio;
 using UnityEngine;
 
 namespace unitwb.audio {
@@ -70,11 +71,16 @@ public class AudioObject
 
   /**
      再生する
+     @param[in] group グループ
      @param[in] clip クリップ
      @param[in] volume ボリューム
      @param[in] loop ループ
   */
-  public AudioObject Play(AudioClip clip, float volume = 1.0f, bool loop = false) {
+  public AudioObject Play(AudioMixerGroup group, 
+                          AudioClip clip, 
+                          float volume = 1.0f, 
+                          bool loop = false) {
+    this.audioSource.outputAudioMixerGroup = group;
     this.audioSource.clip = clip;
     this.audioSource.volume = volume;
     this.audioSource.loop = loop;
