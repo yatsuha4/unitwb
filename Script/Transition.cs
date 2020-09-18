@@ -32,6 +32,12 @@ public class Transition
 
   /**
    */
+  public void SetPause(bool isPause) {
+    GetComponent<Animator>().speed = isPause ? 0.0f : 1.0f;
+  }
+  
+  /**
+   */
   public static Transition Get() {
     return FindObjectOfType<Transition>();
   }
