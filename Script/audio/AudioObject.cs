@@ -101,5 +101,17 @@ public class AudioObject
       this.audioSource.volume = volume;
     }
   }
+
+  /**
+   */
+  public void Stop(float time = 0.0f) {
+    if(time > 0.0f) {
+      SetVolume(0.0f, time);
+    }
+    else {
+      this.audioSource.Stop();
+      Destroy(this.gameObject);
+    }
+  }
 }
 }
