@@ -113,5 +113,14 @@ public class AudioObject
       Destroy(this.gameObject);
     }
   }
+
+  /**
+     クリップを取得する
+  */
+  public AudioClip clip {
+    get {
+      return this.audioSource.clip;
+    }
+  }
 }
 }

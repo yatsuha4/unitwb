@@ -65,10 +65,10 @@ public class AudioManager
      @param[in] volume ボリューム
      @param[in] loop ループ
   */
-  public void PlayMusic(AudioClip clip, 
-                        float fadeTime = 0.0f, 
-                        float volume = 1.0f, 
-                        bool loop = true) {
+  public AudioObject PlayMusic(AudioClip clip, 
+                               float fadeTime = 0.0f, 
+                               float volume = 1.0f, 
+                               bool loop = true) {
     StopMusic(fadeTime);
     if(Play(this.audioPrefab) is AudioObject audioObj) {
       if(fadeTime > 0.0f) {
@@ -79,7 +79,18 @@ public class AudioManager
         audioObj.Play(GetMixer(Mixer.Music), clip, volume, loop);
       }
       this.music = audioObj;
+      return audioObj;
     }
+    return null;
+  }
+
+  /**
+     曲が再生中か調べる
+     @param[in] clip クリップ
+     @return clipが再生中のとき真
+  */
+  public bool IsPlayMusic(AudioClip clip) {
+    return this.music != null && this.music.clip == clip;
   }
 
   /**
