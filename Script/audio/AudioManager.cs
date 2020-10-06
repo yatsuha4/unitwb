@@ -124,5 +124,13 @@ public class AudioManager
   private AudioMixerGroup GetMixer(Mixer mixer) {
     return this.mixers[(int)mixer];
   }
+
+  /**
+   */
+  public void StopAll(float time = 0.0f) {
+    foreach(var audioObject in GetComponentsInChildren<AudioObject>()) {
+      audioObject.Stop(time);
+    }
+  }
 }
 }
