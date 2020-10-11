@@ -23,7 +23,7 @@ Shader "unitwb/UiBlur" {
       Pass {
         CGPROGRAM
         #pragma vertex vert
-        #pragma fragment blurX
+        #pragma fragment blurY
         #include "UnityCG.cginc"
         #include "UiBlur.cginc"
         ENDCG
