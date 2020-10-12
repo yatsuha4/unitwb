@@ -6,7 +6,8 @@ struct appdata {
 
 struct v2f {
   half4 vertex : POSITION;
-  half4 uvgrab : TEXCOORD0;
+  half2 uv : TEXCOORD0;
+  half4 uvgrab : TEXCOORD1;
   half4 color : COLOR;
 };
 
@@ -16,40 +17,50 @@ static const half WEIGHTS[WEIGHT_COUNT] = {
 };
 
 half _Size;
+sampler2D _MainTex;
+float4 _MainTex_ST;
 sampler2D _GrabTexture;
 half4 _GrabTexture_TexelSize;
 
 v2f vert(appdata v) {
   v2f o;
   o.vertex = UnityObjectToClipPos(v.vertex);
+  o.uv = TRANSFORM_TEX(v.uv, _MainTex);
   o.uvgrab = ComputeGrabScreenPos(o.vertex);
   o.color = v.color;
   return o;
 }
 
-half4 blur(v2f i, half w, half kx, half ky) {
+half4 blur(v2f i, half a, half w, half kx, half ky) {
   return tex2Dproj(_GrabTexture, 
                    UNITY_PROJ_COORD(half4(i.uvgrab.x + 
-                                          _GrabTexture_TexelSize.x * kx * _Size * i.color.a, 
+                                          _GrabTexture_TexelSize.x * kx * _Size * a, 
                                           i.uvgrab.y + 
-                                          _GrabTexture_TexelSize.y * ky * _Size * i.color.a, 
+                                          _GrabTexture_TexelSize.y * ky * _Size * a, 
                                           i.uvgrab.z, i.uvgrab.w))) * w;
 }
 
 half4 blurX(v2f src) : SV_Target {
   half4 dst = 0;
+  half4 c = tex2D(_MainTex, src.uv);
   for(int i = 0; i < WEIGHT_COUNT; i++) {
-    dst += blur(src, WEIGHTS[i], i - (WEIGHT_COUNT / 2), 0.0);
+    dst += blur(src, src.color.a * c.a, WEIGHTS[i], i - (WEIGHT_COUNT / 2), 0.0);
   }
-  dst.rgb *= src.color.rgb;
+  dst.a = 1.0;
   return dst;
 }
 
 half4 blurY(v2f src) : SV_Target {
   half4 dst = 0;
+  half4 c = tex2D(_MainTex, src.uv);
   for(int i = 0; i < WEIGHT_COUNT; i++) {
-    dst += blur(src, WEIGHTS[i], 0.0, i - (WEIGHT_COUNT / 2));
+    dst += blur(src, src.color.a * c.a, WEIGHTS[i], 0.0, i - (WEIGHT_COUNT / 2));
   }
-  dst.rgb *= src.color.rgb;
+  dst.rgb *= c.rgb * src.color.rgb;
+  dst.a = c.a;
   return dst;
+}
+
+half4 test(v2f src) : SV_Target {
+  return tex2D(_MainTex, src.uv);
 }

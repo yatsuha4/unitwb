@@ -8,14 +8,18 @@ Shader "unitwb/UiBlur" {
     SubShader {
       Tags {
         "Queue" = "Transparent"
+        "RenderType" = "Transparent"
       }
       Cull Off
+      ZWrite Off
+      Blend SrcAlpha OneMinusSrcAlpha
       GrabPass {}
       Pass {
         CGPROGRAM
         #pragma vertex vert
         #pragma fragment blurX
         #include "UnityCG.cginc"
+        #include "UnityUI.cginc"
         #include "UiBlur.cginc"
         ENDCG
       }
@@ -25,6 +29,7 @@ Shader "unitwb/UiBlur" {
         #pragma vertex vert
         #pragma fragment blurY
         #include "UnityCG.cginc"
+        #include "UnityUI.cginc"
         #include "UiBlur.cginc"
         ENDCG
       }
