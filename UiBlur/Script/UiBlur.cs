@@ -9,13 +9,14 @@ public class UiBlur
 {
   public float blurSize = 2.0f;
 
-  private Material material;
+  private Image image;
   private RectTransform canvasTransform;
 
   /**
    */
   void Awake() {
-    this.material = GetComponent<Image>().material;
+    this.image = GetComponent<Image>();
+    this.image.material = new Material(this.image.material);
     this.canvasTransform = GetComponentInParent<Canvas>()?.GetComponent<RectTransform>();
   }
 
@@ -39,7 +40,7 @@ public class UiBlur
       size *= Mathf.Lerp(canvasTransform.localScale.x, 
                          canvasTransform.localScale.y, 0.5f);
     }
-    this.material.SetFloat("_Size", size);
+    this.image.material.SetFloat("_Size", size);
   }
 }
 }
