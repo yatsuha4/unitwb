@@ -27,9 +27,20 @@ public class EditorCoroutine {
   /**
    */
   private void Update() {
-    if(!this.coroutine.MoveNext()) {
+    if(!Update(this.coroutine)) {
       Stop();
     }
+  }
+
+  /**
+   */
+  private static bool Update(IEnumerator iter) {
+    if(iter.Current is IEnumerator child) {
+      if(Update(child)) {
+        return true;
+      }
+    }
+    return iter.MoveNext();
   }
 
   /**
