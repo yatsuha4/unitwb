@@ -12,21 +12,16 @@ public abstract class Localizer<T>
 {
   public T[] values;
   private T value = null;
+  private Locale locale = null;
 
   /**
    */
-  protected void OnEnable() {
+  protected void Update() {
     var locale = LocalizationSettings.SelectedLocale;
-    if(locale != null) {
+    if(locale != null && locale != this.locale) {
+      this.locale = locale;
       OnChangeLocale(locale);
     }
-    LocalizationSettings.SelectedLocaleChanged += OnChangeLocale;
-  }
-
-  /**
-   */
-  protected void OnDisable() {
-    LocalizationSettings.SelectedLocaleChanged -= OnChangeLocale;
   }
 
   /**
