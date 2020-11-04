@@ -28,6 +28,7 @@ public class AudioManager
   void Awake() {
     if(instance == null) {
       instance = this;
+      this.transform.parent = null;
       DontDestroyOnLoad(this.gameObject);
     }
     else {
