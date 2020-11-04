@@ -1,5 +1,6 @@
-using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 namespace unitwb {
 /**
@@ -7,6 +8,7 @@ namespace unitwb {
 public class Transition
   : MonoBehaviour
 {
+  public UnityEvent onIn;
   private System.Action callback;
 
   /**
@@ -22,6 +24,12 @@ public class Transition
   public void Transit(System.Action callback) {
     this.callback = callback;
     GetComponent<Animator>().SetTrigger("Out");
+  }
+
+  /**
+   */
+  public void OnIn() {
+    this.onIn?.Invoke();
   }
 
   /**
