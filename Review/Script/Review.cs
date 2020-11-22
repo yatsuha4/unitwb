@@ -2,6 +2,10 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
+#if UNITY_ANDROID && UNITWB_REVIEW
+using Google.Play.Review;
+#endif
+
 namespace unitwb {
 /**
  */
