@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,7 +14,9 @@ public class Review
      レビューを促す
   */
   public void Show() {
-#if UNITY_EDITOR
+#if !UNITWB_REVIEW
+    Debug.LogError("Must be define UNITWB_REVIEW");
+#elif UNITY_EDITOR
     Debug.Log("Service.RequestReview()");
     this.onShow.Invoke();
 #elif UNITY_IOS
@@ -24,7 +27,7 @@ public class Review
 #endif
   }
 
-#if UNITY_ANDROID
+#if UNITY_ANDROID && UNITWB_REVIEW
   private IEnumerator DoShow() {
     var manager = new ReviewManager();
     var request = manager.RequestReviewFlow();
