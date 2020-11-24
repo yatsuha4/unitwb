@@ -18,17 +18,17 @@ public class DefaultText {
   public static void SetDefaultText() {
     foreach(var obj in Resources.FindObjectsOfTypeAll<LocalizeStringEvent>()) {
       if(obj.GetComponent<Text>() is Text text) {
-        text.text = GetText(obj.StringReference);
+        SetText(text, "m_text", obj.StringReference);
       }
       else if(obj.GetComponent<TextMeshProUGUI>() is TextMeshProUGUI textMesh) {
-        textMesh.text = GetText(obj.StringReference);
+        SetText(textMesh, "m_text", obj.StringReference);
       }
     }
   }
 
   /**
    */
-  private static string GetText(LocalizedString src) {
+  private static void SetText(Object component, string property, LocalizedString src) {
     if(!src.IsEmpty) {
       var collection = 
         LocalizationEditorSettings.GetStringTableCollection(src.TableReference);
@@ -39,12 +39,15 @@ public class DefaultText {
           var locale = 
             LocalizationEditorSettings.GetLocale(entry.TableEntriesReference[i].Code);
           if(locale.SortOrder == 0) {
-            return entry.TableEntries[i].LocalizedValue;
+            var serializedObject = new SerializedObject(component);
+            serializedObject.FindProperty(property).stringValue = 
+              entry.TableEntries[i].LocalizedValue;
+            serializedObject.ApplyModifiedProperties();
+            break;
           }
         }
       }
     }
-    return "";
   }
 }
 }
