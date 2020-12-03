@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using UnityEngine.Audio;
 using UnityEngine;
+using UnityEngine.Audio;
 
-namespace unitwb.audio {
+namespace unitwb {
 /**
    オーディオマネージャー
 */
