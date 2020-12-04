@@ -8,8 +8,21 @@ namespace unitwb {
 public class Transition
   : MonoBehaviour
 {
+  public bool autoIn = true;
   public UnityEvent onIn;
   private System.Action callback;
+
+  /**
+   */
+  void Awake() {
+    GetComponent<Animator>().SetBool("In", this.autoIn);
+  }
+
+  /**
+   */
+  public void In() {
+    GetComponent<Animator>().SetBool("In", true);
+  }
 
   /**
    */
@@ -23,7 +36,7 @@ public class Transition
    */
   public void Transit(System.Action callback) {
     this.callback = callback;
-    GetComponent<Animator>().SetTrigger("Out");
+    GetComponent<Animator>().SetBool("In", false);
   }
 
   /**
@@ -38,12 +51,6 @@ public class Transition
     this.callback?.Invoke();
   }
 
-  /**
-   */
-  public void SetPause(bool isPause) {
-    GetComponent<Animator>().speed = isPause ? 0.0f : 1.0f;
-  }
-  
   /**
    */
   public static Transition Get() {

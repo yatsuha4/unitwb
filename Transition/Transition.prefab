@@ -50,7 +50,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 2fb3152d8e5f44f61944b97d2470d6a4, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
@@ -69,6 +69,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b94159a424af34f1283030584c37653c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onIn:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &9031111023627352481
 GameObject:
   m_ObjectHideFlags: 0
