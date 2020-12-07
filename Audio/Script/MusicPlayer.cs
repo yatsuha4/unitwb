@@ -10,7 +10,7 @@ public class MusicPlayer
 
   /**
    */
-  void Awake() {
+  void Start() {
     if(AudioManager.instance is AudioManager manager) {
       if(!manager.IsPlayMusic(musicClip)) {
         manager.PlayMusic(musicClip);
