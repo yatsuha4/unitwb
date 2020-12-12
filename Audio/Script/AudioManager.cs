@@ -62,15 +62,20 @@ public class AudioManager
   /**
      曲を再生する
      @param[in] clip クリップ
+     @param[in] crossFadeTime クロスフェード時間
      @param[in] fadeTime フェード時間
      @param[in] volume ボリューム
      @param[in] loop ループ
   */
   public AudioObject PlayMusic(AudioClip clip, 
+                               float crossFadeTime = 1.0f, 
                                float fadeTime = 0.0f, 
                                float volume = 1.0f, 
                                bool loop = true) {
-    StopMusic(fadeTime);
+    if(!StopMusic(crossFadeTime)) {
+      crossFadeTime = 0.0f;
+    }
+    fadeTime = Mathf.Max(fadeTime, crossFadeTime);
     if(Play(this.audioPrefab) is AudioObject audioObj) {
       if(fadeTime > 0.0f) {
         audioObj.Play(GetMixer(Mixer.Music), clip, 0.0f, loop).
@@ -97,12 +102,15 @@ public class AudioManager
   /**
      曲を停止する
      @param[in] time フェードアウト時間
+     @return 再生中だったとき真
   */
-  public void StopMusic(float time = 0.5f) {
+  public bool StopMusic(float time = 0.5f) {
     if(this.music != null) {
       this.music.SetVolume(0.0f, time);
       this.music = null;
+      return true;
     }
+    return false;
   }
 
   /**
