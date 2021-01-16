@@ -1,0 +1,37 @@
+using UnityEngine;
+
+namespace unitwb.dialog {
+/**
+   ダイアログマネージャ
+*/
+public class DialogManager
+  : MonoBehaviour
+{
+  private Singleton<Dialog> dialog = null;
+
+  /**
+   */
+  void Awake() {
+    this.dialog = new Singleton<Dialog>();
+  }
+
+  /**
+     ダイアログを開く
+     @param[in] prefab ダイアログプレハブ
+  */
+  public void Open(GameObject prefab) {
+    Close();
+    var obj = Instantiate(prefab, this.transform);
+    var dialog = obj.GetComponent<Dialog>();
+    Debug.Assert(dialog != null);
+    this.dialog.Set(dialog);
+  }
+
+  /**
+     ダイアログを閉じる
+  */
+  public void Close() {
+    this.dialog.Release()?.Close();
+  }
+}
+}
