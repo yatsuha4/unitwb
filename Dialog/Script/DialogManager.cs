@@ -16,6 +16,11 @@ public class DialogManager
   }
 
   /**
+   */
+  void Update() {
+  }
+
+  /**
      ダイアログを開く
      @param[in] prefab ダイアログプレハブ
   */
@@ -25,12 +30,14 @@ public class DialogManager
     var dialog = obj.GetComponent<Dialog>();
     Debug.Assert(dialog != null);
     this.dialog.Set(dialog);
+    GetComponent<Animator>().SetBool("Open", true);
   }
 
   /**
      ダイアログを閉じる
   */
   public void Close() {
+    GetComponent<Animator>().SetBool("Open", false);
     this.dialog.Release()?.Close();
   }
 }

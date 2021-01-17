@@ -6,7 +6,7 @@ namespace unitwb {
    シングルトンインスタンス
 */
 public class Singleton<T> where T: class {
-  private T instance = null;
+  public T instance { private set; get; } = null;
   private Func<T> creater;
 
   /**
