@@ -11,6 +11,13 @@ public class Dialog
      閉じる
   */
   public void Close() {
+    GetComponentInParent<DialogManager>().Close();
+  }
+
+  /**
+   */
+  public void OnClose() {
+    GetComponent<Animator>().SetBool("Close", true);
   }
 }
 }

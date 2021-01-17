@@ -38,7 +38,7 @@ public class DialogManager
   */
   public void Close() {
     GetComponent<Animator>().SetBool("Open", false);
-    this.dialog.Release()?.Close();
+    this.dialog.Release()?.OnClose();
   }
 }
 }
