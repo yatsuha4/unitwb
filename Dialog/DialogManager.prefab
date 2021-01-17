@@ -191,11 +191,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8467382733354114987, guid: a15f2336f8e714c8cb5c861a0cf39c29,
-        type: 3}
-      propertyPath: blurSize
-      value: 200
-      objectReference: {fileID: 0}
     - target: {fileID: 9146414773436028593, guid: a15f2336f8e714c8cb5c861a0cf39c29,
         type: 3}
       propertyPath: m_Color.b

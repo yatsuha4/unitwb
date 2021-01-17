@@ -37,8 +37,8 @@ public class UiBlur
   void UpdateMaterial() {
     var size = this.blurSize;
     if(this.canvasTransform != null) {
-      size *= Mathf.Lerp(canvasTransform.localScale.x, 
-                         canvasTransform.localScale.y, 0.5f);
+      size *= Mathf.Lerp(Screen.width / canvasTransform.rect.width, 
+                         Screen.height / canvasTransform.rect.height, 0.5f);
     }
     this.image.material.SetFloat("_Size", size);
   }
