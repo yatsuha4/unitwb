@@ -24,13 +24,14 @@ public class DialogManager
      ダイアログを開く
      @param[in] prefab ダイアログプレハブ
   */
-  public void Open(GameObject prefab) {
+  public Dialog Open(GameObject prefab) {
     Close();
     var obj = Instantiate(prefab, this.transform);
     var dialog = obj.GetComponent<Dialog>();
     Debug.Assert(dialog != null);
     this.dialog.Set(dialog);
     GetComponent<Animator>().SetBool("Open", true);
+    return dialog;
   }
 
   /**
