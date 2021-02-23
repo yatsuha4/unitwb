@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 
 namespace unitwb {
@@ -6,9 +7,9 @@ namespace unitwb {
 public static class Enum<T> {
   /**
    */
-  public static T[] Values {
+  public static IEnumerable<T> Values {
     get {
-      return System.Enum.GetValues(typeof(T)).Cast<T>().ToArray();
+      return System.Enum.GetValues(typeof(T)).OfType<T>();
     }
   }
 
