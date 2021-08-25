@@ -8,7 +8,7 @@ namespace unitwb.dialog {
 public class Dialog
   : MonoBehaviour
 {
-  private bool isClose = false;
+  public bool isClose { private set; get; } = false;
 
   /**
    */
