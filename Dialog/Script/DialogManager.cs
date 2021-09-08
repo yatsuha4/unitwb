@@ -1,45 +1,36 @@
 using UnityEngine;
 
 namespace unitwb.dialog {
-/**
-   ダイアログマネージャ
-*/
-public class DialogManager
-  : MonoBehaviour
-{
-  private Singleton<Dialog> dialog = null;
-
   /**
-   */
-  void Awake() {
-    this.dialog = new Singleton<Dialog>();
-  }
-
-  /**
-   */
-  void Update() {
-  }
-
-  /**
-     ダイアログを開く
-     @param[in] prefab ダイアログプレハブ
+     <summary>ダイアログマネージャ</summary>
   */
-  public Dialog Open(GameObject prefab) {
-    Close();
-    var obj = Instantiate(prefab, this.transform);
-    var dialog = obj.GetComponent<Dialog>();
-    Debug.Assert(dialog != null);
-    this.dialog.Set(dialog);
-    GetComponent<Animator>().SetBool("Open", true);
-    return dialog;
-  }
+  public class DialogManager : MonoBehaviour {
+    private Dialog dialog = null;
 
-  /**
-     ダイアログを閉じる
-  */
-  public void Close() {
-    GetComponent<Animator>().SetBool("Open", false);
-    this.dialog.Release()?.OnClose();
+    /**
+       <summary>ダイアログを開く</summary>
+       <param name="dialog">ダイアログ</summary>
+    */
+    public Dialog Open(Dialog dialog) {
+      Close();
+      GetComponent<Animator>().SetBool("Open", true);
+      dialog.Open();
+      this.dialog = dialog;
+      return dialog;
+    }
+
+    /**
+       <summary>ダイアログを閉じる</summary>
+    */
+    public void Close() {
+      this.dialog?.Close();
+      this.dialog = null;
+    }
+
+    /**
+     */
+    public void OnClose() {
+      GetComponent<Animator>().SetBool("Open", false);
+    }
   }
-}
 }
