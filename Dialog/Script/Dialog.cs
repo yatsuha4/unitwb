@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -6,8 +7,11 @@ namespace unitwb.dialog {
      <summary>ダイアログ</summary>
   */
   public class Dialog : MonoBehaviour {
-    /** <value>閉じてる？</value> */
-    public bool isClose = false;
+    /** <value>開いてる？</value> */
+    public bool isOpen { private set; get; } = false;
+
+    /** <value>閉じたときのコールバック</value> */
+    public Action onClose = null;
 
     private Animator animator;
 
@@ -23,6 +27,7 @@ namespace unitwb.dialog {
     public void Open() {
       this.animator.SetBool("Close", false);
       this.animator.SetTrigger("Open");
+      this.isOpen = true;
     }
 
     /**
@@ -36,7 +41,7 @@ namespace unitwb.dialog {
        <summary>閉じるまで待つ</summary>
     */
     public async Task Modal() {
-      while(!this.isClose) {
+      while(this.isOpen) {
         await Task.Yield();
       }
     }
@@ -44,6 +49,9 @@ namespace unitwb.dialog {
     /**
      */
     public void OnClose() {
+      this.isOpen = false;
+      this.onClose?.Invoke();
+      this.onClose = null;
       GetComponentInParent<DialogManager>().OnClose();
     }
   }
