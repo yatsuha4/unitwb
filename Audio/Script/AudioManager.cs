@@ -48,9 +48,12 @@ public class AudioManager
      @param[in] volume ボリューム
      @return オブジェクト
   */
-  public AudioObject PlaySound(AudioClip clip, float volume = 1.0f) {
-    if(!this.playSounds.Contains(clip)) {
-      if(Play(this.audioPrefab) is AudioObject audioObj) {
+  public AudioObject PlaySound(AudioClip clip, float volume = 1.0f)
+  {
+    if(clip != null && !this.playSounds.Contains(clip))
+    {
+      if(Play(this.audioPrefab) is AudioObject audioObj)
+      {
         audioObj.Play(GetMixer(Mixer.Sound), clip, volume);
         this.playSounds.Add(clip);
         return audioObj;

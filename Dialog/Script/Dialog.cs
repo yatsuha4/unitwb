@@ -13,6 +13,9 @@ namespace unitwb.dialog {
     /** <value>閉じたときのコールバック</value> */
     public Action onClose = null;
 
+    public AudioClip openSound;
+    public AudioClip closeSound;
+
     private Animator animator;
 
     /**
@@ -48,11 +51,20 @@ namespace unitwb.dialog {
 
     /**
      */
-    public void OnClose() {
+    public void OnOpen()
+    {
+      AudioManager.instance.PlaySound(this.openSound);
+    }
+
+    /**
+     */
+    public void OnClose()
+    {
       this.isOpen = false;
       this.onClose?.Invoke();
       this.onClose = null;
       GetComponentInParent<DialogManager>().OnClose();
+      AudioManager.instance.PlaySound(this.closeSound);
     }
   }
 }
