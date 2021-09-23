@@ -12,7 +12,8 @@ public class Transition
   public bool autoIn = true;
   public UnityEvent onIn;
   private System.Action callback;
-  private bool isIn = false;
+
+  public bool IsIn { private set; get; } = false;
 
   /**
    */
@@ -24,7 +25,14 @@ public class Transition
    */
   public async Task In() {
     GetComponent<Animator>().SetBool("In", true);
-    while(!this.isIn) {
+    await WaitIn();
+  }
+
+  /**
+   */
+  public async Task WaitIn()
+  {
+    while(!this.IsIn) {
       await Task.Yield();
     }
   }
@@ -47,7 +55,7 @@ public class Transition
   /**
    */
   public void OnIn() {
-    this.isIn = true;
+    this.IsIn = true;
     this.onIn?.Invoke();
   }
 
