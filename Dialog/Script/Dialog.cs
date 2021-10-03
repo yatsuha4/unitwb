@@ -6,10 +6,9 @@ namespace unitwb.dialog {
   /**
      <summary>ダイアログ</summary>
   */
-  public class Dialog : MonoBehaviour {
-    /** <value>開いてる？</value> */
-    public bool isOpen { private set; get; } = false;
-
+  public class Dialog
+    : MonoBehaviour
+  {
     /** <value>閉じたときのコールバック</value> */
     public Action onClose = null;
 
@@ -20,51 +19,53 @@ namespace unitwb.dialog {
 
     /**
      */
-    void Awake() {
+    void Awake()
+    {
       this.animator = GetComponent<Animator>();
+    }
+
+    /**
+       <value>開いてる？</value>
+    */
+    public bool IsOpen
+    {
+      get
+      {
+        return !this.animator.GetBool("Close");
+      }
     }
 
     /**
        <summary>開く</summary>
     */
-    public void Open() {
+    public void Open()
+    {
+      AudioManager.instance.PlaySound(this.openSound);
       this.animator.SetBool("Close", false);
       this.animator.SetTrigger("Open");
-      this.isOpen = true;
     }
 
     /**
        <summary>閉じる</summary>
     */
-    public void Close() {
+    public void Close()
+    {
+      AudioManager.instance.PlaySound(this.closeSound);
       this.animator.SetBool("Close", true);
+      this.onClose?.Invoke();
+      this.onClose = null;
+      GetComponentInParent<DialogManager>().OnClose();
     }
 
     /**
        <summary>閉じるまで待つ</summary>
     */
-    public async Task Modal() {
-      while(this.isOpen) {
+    public async Task Modal()
+    {
+      while(this.IsOpen)
+      {
         await Task.Yield();
       }
-    }
-
-    /**
-     */
-    public void OnOpen()
-    {
-      AudioManager.instance.PlaySound(this.openSound);
-    }
-
-    /**
-     */
-    public void OnClose()
-    {
-      this.isOpen = false;
-      this.onClose?.Invoke();
-      this.onClose = null;
-      GetComponentInParent<DialogManager>().OnClose();
-      AudioManager.instance.PlaySound(this.closeSound);
     }
   }
 }
