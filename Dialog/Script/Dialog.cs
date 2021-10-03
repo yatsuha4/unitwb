@@ -50,11 +50,14 @@ namespace unitwb.dialog {
     */
     public void Close()
     {
-      AudioManager.instance.PlaySound(this.closeSound);
-      this.animator.SetBool("Close", true);
-      this.onClose?.Invoke();
-      this.onClose = null;
-      GetComponentInParent<DialogManager>().OnClose();
+      if(this.IsOpen)
+      {
+        AudioManager.instance.PlaySound(this.closeSound);
+        this.animator.SetBool("Close", true);
+        this.onClose?.Invoke();
+        this.onClose = null;
+        GetComponentInParent<DialogManager>().OnClose();
+      }
     }
 
     /**
