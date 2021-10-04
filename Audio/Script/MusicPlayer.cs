@@ -34,7 +34,7 @@ public class MusicPlayer
   public AudioObject PlayMusic(AudioClip musicClip, float crossFadeTime) {
     if(AudioManager.instance is AudioManager manager) {
       if(!manager.IsPlayMusic(musicClip)) {
-        return manager.PlayMusic(musicClip, crossFadeTime = crossFadeTime);
+        return manager.PlayMusic(musicClip, crossFadeTime: crossFadeTime);
       }
     }
     return null;
