@@ -22,7 +22,7 @@ public class Gesture
 
   public Vector2 swipe { private set; get; } = Vector2.zero;
 
-  private Camera camera = null;
+  private Camera canvasCamera = null;
   private Vector2? pos = null;
   private float time = 0.0f;
   private bool prevButton = false;
@@ -31,7 +31,7 @@ public class Gesture
    */
   void Awake() {
     if(GetComponentInParent<Canvas>() is Canvas canvas) {
-      this.camera = canvas.worldCamera;
+      this.canvasCamera = canvas.worldCamera;
     }
   }
 
@@ -83,7 +83,7 @@ public class Gesture
     if(GetComponent<RectTransform>() is RectTransform rect) {
       Vector2 pos;
       if(RectTransformUtility.
-         ScreenPointToLocalPointInRectangle(rect, screenPos, this.camera, out pos)) {
+         ScreenPointToLocalPointInRectangle(rect, screenPos, this.canvasCamera, out pos)) {
         return pos;
       }
       return Vector2.zero;
@@ -98,7 +98,7 @@ public class Gesture
   */
   private bool IsContain(Vector2 screenPos) {
     if(GetComponent<RectTransform>() is RectTransform rect) {
-      return RectTransformUtility.RectangleContainsScreenPoint(rect, screenPos, this.camera);
+      return RectTransformUtility.RectangleContainsScreenPoint(rect, screenPos, this.canvasCamera);
     }
     return true;
   }
