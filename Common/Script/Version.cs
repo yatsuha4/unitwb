@@ -63,9 +63,19 @@ namespace unitwb {
       return lhs.CompareTo(rhs) != 0;
     }
 
-    override public string? ToString()
+    public override string ToString()
     {
       return $"{this.major}.{this.minor}";
+    }
+
+    public override bool Equals(object obj)
+    {
+      return (obj is Version version) && this == version;
+    }
+
+    public override int GetHashCode()
+    {
+      return Tuple.Create(this.major, this.minor).GetHashCode();
     }
   }
 }
