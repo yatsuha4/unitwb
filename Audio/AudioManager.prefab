@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39774f7cb38424d908cda3ff4e35db48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dontDestroy: 1
   mixer: {fileID: 24100000, guid: 714e745a75b2f468daaa3e7460a89fdb, type: 2}
   mixers:
   - {fileID: -4788977840479794684, guid: 714e745a75b2f468daaa3e7460a89fdb, type: 2}

@@ -9,7 +9,10 @@ namespace Towerb
     : MonoBehaviour
     where T : MonoBehaviour
   {
-    private static T instance;
+    [SerializeField]
+    private bool dontDestroy = false;
+
+    private static MonoBehaviour instance;
 
     /**
      */
@@ -17,13 +20,27 @@ namespace Towerb
     {
       if(instance == null)
       {
-        instance = this as T;
-        this.transform.parent = null;
-        DontDestroyOnLoad(this.gameObject);
+        instance = this;
+        if(this.dontDestroy)
+        {
+          this.transform.parent = null;
+          DontDestroyOnLoad(this.gameObject);
+        }
       }
       else
       {
+        Debug.Assert(this.dontDestroy);
         Destroy(this.gameObject);
+      }
+    }
+
+    /**
+     */
+    void OnDestroy()
+    {
+      if(instance == this)
+      {
+        instance = null;
       }
     }
 
@@ -31,7 +48,7 @@ namespace Towerb
      */
     public static T Instance
     {
-      get { return instance; }
+      get { return instance as T; }
     }
   }
 }
