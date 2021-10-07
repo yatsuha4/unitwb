@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
-namespace Towerb
+namespace Towerb.Audio
 {
   /**
-     オーディオマネージャー
+     <summary>オーディオマネージャー</summary>
   */
   public class AudioManager 
     : SingletonBehaviour<AudioManager>

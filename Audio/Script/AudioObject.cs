@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
-namespace Towerb
+namespace Towerb.Audio
 {
   /**
      オーディオオブジェクト
