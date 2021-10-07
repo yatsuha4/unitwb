@@ -12,15 +12,15 @@ namespace Towerb
     [SerializeField]
     private bool dontDestroy = false;
 
-    private static MonoBehaviour instance;
+    private static T instance;
 
     /**
      */
-    void Awake()
+    protected virtual void Awake()
     {
       if(instance == null)
       {
-        instance = this;
+        instance = this as T;
         if(this.dontDestroy)
         {
           this.transform.parent = null;
@@ -36,9 +36,9 @@ namespace Towerb
 
     /**
      */
-    void OnDestroy()
+    protected virtual void OnDestroy()
     {
-      if(instance == this)
+      if(this as T == instance)
       {
         instance = null;
       }
@@ -48,7 +48,7 @@ namespace Towerb
      */
     public static T Instance
     {
-      get { return instance as T; }
+      get { return instance; }
     }
   }
 }
