@@ -2,7 +2,8 @@ using System;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace unitwb.dialog {
+namespace Towerb
+{
   /**
      <summary>ダイアログ</summary>
   */
@@ -40,7 +41,7 @@ namespace unitwb.dialog {
     */
     public void Open()
     {
-      AudioManager.instance.PlaySound(this.openSound);
+      AudioManager.Instance.PlaySound(this.openSound);
       this.animator.SetBool("Close", false);
       this.animator.SetTrigger("Open");
     }
@@ -52,7 +53,7 @@ namespace unitwb.dialog {
     {
       if(this.IsOpen)
       {
-        AudioManager.instance.PlaySound(this.closeSound);
+        AudioManager.Instance.PlaySound(this.closeSound);
         this.animator.SetBool("Close", true);
         this.onClose?.Invoke();
         this.onClose = null;
