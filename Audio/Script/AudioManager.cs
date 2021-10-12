@@ -124,11 +124,8 @@ public class AudioManager
 
   /**
    */
-  public void SetMasterVolume(Mixer mixer, float volume) {
-    this.mixer.SetFloat(mixer.ToString(), 
-                        (volume > 0.0f)
-                        ? Mathf.Clamp(Mathf.Log10(volume) * 20.0f, -80.0f, 0.0f)
-                        : -80.0f);
+  public void SetVolume(Mixer mixer, float volume) {
+    this.mixer.SetFloat(mixer.ToString(), GetDecibel(volume));
   }
 
   /**
@@ -143,6 +140,15 @@ public class AudioManager
     foreach(var audioObject in GetComponentsInChildren<AudioObject>()) {
       audioObject.Stop(time);
     }
+  }
+
+  /**
+   */
+  private float GetDecibel(float volume)
+  {
+    return (volume > 0.0f)
+      ? Mathf.Clamp(Mathf.Log10(volume) * 20.0f, -80.0f, 0.0f)
+      : -80.0f;
   }
 }
 }
