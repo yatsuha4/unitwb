@@ -124,6 +124,13 @@ public class AudioManager
 
   /**
    */
+  public void SetMasterVolume(float volume)
+  {
+    this.mixer.SetFloat("Master", GetDecibel(volume));
+  }
+
+  /**
+   */
   public void SetVolume(Mixer mixer, float volume) {
     this.mixer.SetFloat(mixer.ToString(), GetDecibel(volume));
   }
