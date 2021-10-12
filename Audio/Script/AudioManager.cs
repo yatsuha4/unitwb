@@ -125,13 +125,34 @@ namespace Towerb.Audio
     }
 
     /**
-     */
-    public void SetMasterVolume(Mixer mixer, float volume)
+       <summary>マスター音量を設定する</summary>
+       <param name="volume">音量(0.0~1.0)</param>
+    */
+    public void SetMasterVolume(float volume)
     {
-      this.mixer.SetFloat(mixer.ToString(), 
-                          (volume > 0.0f)
-                          ? Mathf.Clamp(Mathf.Log10(volume) * 20.0f, -80.0f, 0.0f)
-                          : -80.0f);
+      this.mixer.SetFloat("Master", GetDecibel(volume));
+    }
+
+    /**
+       <summary>音量を設定する</summary>
+       <param name="mixer">ミキサー</param>
+       <param name="volume">音量(0.0~1.0)</param>
+    */
+    public void SetVolume(Mixer mixer, float volume)
+    {
+      this.mixer.SetFloat(mixer.ToString(), GetDecibel(volume));
+    }
+
+    /**
+       <summary>音量からデシベルを求める</summary>
+       <param name="volume">音量(0.0~1.0)</param>
+       <returns>デシベル</returns>
+    */
+    private float GetDecibel(float volume)
+    {
+      return (volume > 0.0f)
+        ? Mathf.Clamp(Mathf.Log10(volume) * 20.0f, -80.0f, 0.0f)
+        : -80.0f;
     }
 
     /**
