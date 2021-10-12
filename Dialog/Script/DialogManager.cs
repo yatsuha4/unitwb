@@ -1,14 +1,14 @@
 using UnityEngine;
 
-namespace Towerb
+namespace Towerb.Dialog
 {
   /**
      <summary>ダイアログマネージャ</summary>
   */
   public class DialogManager
-    : MonoBehaviour
+    : SingletonBehaviour<DialogManager>
   {
-    private Dialog dialog = null;
+    private Dialog dialog;
 
     /**
        <summary>ダイアログを開く</summary>
