@@ -16,7 +16,7 @@ namespace Towerb.Ranking
     /**
        <value>自身の要素</value>
     */
-    public Item self { private set; get; }
+    public Item Self { private set; get; }
 
     /**
        <summary>コンストラクタ</summary>
@@ -24,7 +24,7 @@ namespace Towerb.Ranking
     public Ranking(Item[] items, Item self)
     {
       this.items = items;
-      this.self = self;
+      this.Self = self;
     }
 
     /**
@@ -44,11 +44,11 @@ namespace Towerb.Ranking
       var items = this.items.
         Where(item => filter(item)).
         OrderBy(item => order(item)).
-        ThenBy(item => ((item == this.self) ? 0 : 1)).
+        ThenBy(item => ((item == this.Self) ? 0 : 1)).
         ToArray();
-      if(this.self != null)
+      if(this.Self != null)
       {
-        var rank = Array.IndexOf(items, this.self);
+        var rank = Array.IndexOf(items, this.Self);
         if(rank >= max)
         {
           for(int i = rank - near, 
