@@ -1,24 +1,30 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace unitwb {
-/**
- */
-public static class Enum<T> {
+namespace Towerb
+{
   /**
    */
-  public static IEnumerable<T> Values {
-    get {
-      return System.Enum.GetValues(typeof(T)).OfType<T>();
+  public static class Enum<T>
+  {
+    /**
+     */
+    public static IEnumerable<T> Values
+    {
+      get
+      {
+        return System.Enum.GetValues(typeof(T)).OfType<T>();
+      }
     }
-  }
 
-  /**
-   */
-  public static int Length {
-    get {
-      return System.Enum.GetValues(typeof(T)).Length;
+    /**
+     */
+    public static int Length
+    {
+      get
+      {
+        return System.Enum.GetValues(typeof(T)).Length;
+      }
     }
   }
-}
 }
