@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Towerb.PlatformImage
+namespace towerb.platformimage
 {
   /**
      <summary>プラットフォームごとに違う画像</summary>

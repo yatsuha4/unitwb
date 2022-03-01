@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-namespace Towerb.Transition
+namespace towerb.transition
 {
   /**
    */

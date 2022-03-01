@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Towerb.Audio
+namespace towerb.audio
 {
   /**
    */

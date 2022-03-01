@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Towerb
+namespace towerb
 {
   /**
      <summary>シングルトン</summary>

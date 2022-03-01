@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Towerb.Dialog
+namespace towerb.dialog
 {
   /**
      <summary>ダイアログマネージャ</summary>

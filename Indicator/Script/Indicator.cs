@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Towerb.Indicator
+namespace towerb.indicator
 {
   /**
      インジケーター

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Towerb.VersionText
+namespace towerb.versiontext
 {
   /**
      <summary>アプリバージョン表示</summary>
