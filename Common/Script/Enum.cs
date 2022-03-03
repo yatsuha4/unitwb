@@ -26,5 +26,12 @@ namespace towerb
                 return System.Enum.GetValues(typeof(T)).Length;
             }
         }
+
+        /**
+         */
+        public static T Parse(string value)
+        {
+            return (T)System.Enum.Parse(typeof(T), value);
+        }
     }
 }
