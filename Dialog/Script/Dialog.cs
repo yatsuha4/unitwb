@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using towerb.audio;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace towerb.dialog
 {
@@ -11,11 +12,13 @@ namespace towerb.dialog
     public class Dialog
         : MonoBehaviour
     {
-        /** <value>閉じたときのコールバック</value> */
-        public Action onClose = null;
-
         public AudioClip openSound;
         public AudioClip closeSound;
+
+        /**
+         * <value>閉じたときのイベント</value>
+         */
+        public UnityEvent onClose;
 
         private Animator animator;
 
@@ -56,8 +59,7 @@ namespace towerb.dialog
             {
                 AudioManager.Instance.PlaySound(this.closeSound);
                 this.animator.SetBool("Close", true);
-                this.onClose?.Invoke();
-                this.onClose = null;
+                this.onClose.Invoke();
                 GetComponentInParent<DialogManager>().OnClose();
             }
         }
