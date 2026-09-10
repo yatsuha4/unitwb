@@ -8,14 +8,14 @@ namespace unitwb
      */
     public class SafeArea: MonoBehaviour
     {
-        private RectTransform canvas;
-        private Rect rect;
+        private Canvas canvas;
+        private float? canvasScale;
 
         /**
          */
         void Awake()
         {
-            this.canvas = GetComponentInParent<Canvas>().GetComponent<RectTransform>();
+            this.canvas = GetComponentInParent<Canvas>();
             UpdateLayout();
         }
 
@@ -23,23 +23,24 @@ namespace unitwb
          */
         void Update()
         {
-            if(this.canvas.rect != this.rect)
-            {
-                this.rect = this.canvas.rect;
-                UpdateLayout();
-            }
+            UpdateLayout();
         }
 
         /**
          */
         private void UpdateLayout()
         {
-            var resolution = new Vector2(Screen.width, Screen.height);
-            var safeArea = Screen.safeArea;
-            var scale = (Vector2)this.canvas.localScale;
-            var transform = GetComponent<RectTransform>();
-            transform.offsetMin = safeArea.min / scale;
-            transform.offsetMax = (safeArea.max - resolution) / scale;
+            var canvasScale = Screen.height /
+                this.canvas.GetComponent<RectTransform>().sizeDelta.y;
+            if(!this.canvasScale.HasValue || this.canvasScale.Value != canvasScale)
+            {
+                this.canvasScale = canvasScale;
+                var resolution = new Vector2(Screen.width, Screen.height);
+                var safeArea = Screen.safeArea;
+                var transform = GetComponent<RectTransform>();
+                transform.offsetMin = safeArea.min / this.canvasScale.Value;
+                transform.offsetMax = (safeArea.max - resolution) / this.canvasScale.Value;
+            }
         }
     }
 }
